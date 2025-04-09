@@ -1,0 +1,7 @@
+# mysql服务器数据
+mysql:
+    host: rm-bp1hfn11y5r6162vako.mysql.rds.aliyuncs.com
+    port: 3306
+    user: wms_tk
+    password: wms19991216WMS
+    db: tk_backstage

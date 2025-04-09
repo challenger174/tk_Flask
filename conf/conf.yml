@@ -1,0 +1,18 @@
+# 服务器配置
+service:
+  host: 127.0.0.1
+  port: 5001
+  # 线程池最大线程数
+  max_workers: 5
+  # 线程间通信的队列大小
+  queue_size: 50
+  #如果通信队列为空，sleep的时间 单位：s
+  wait_ts: 5
+#是否使用gpt进行图片过滤：会导致速度变慢，默认false
+check_desc_img: false
+
+#需要使用哪个文件夹下的数据
+#use_which_yml: daily_easy/storage_bag_for_toys
+use_which_yml: stickers
+#use_which_yml: daily_easy/fengshui
+#use_which_yml: daily_easy/card

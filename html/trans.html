@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiktok-标题优化工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-2xl bg-white p-8 rounded-xl shadow-xl">
+        <h2 class="text-2xl font-bold text-center mb-6">📊 Tiktok小语种国家标题优化</h2>
+
+        <!-- 选择文件 1 -->
+        <label class="file-upload block text-center">
+            <input type="file" id="file1" class="hidden" onchange="updateFileName(this, 'file-label-1')">
+            <div class="custom-upload-btn">
+                <span id="file-label-1">📂 全球商品数据上传【基础信息】</span>
+            </div>
+        </label>
+
+        <!-- 选择文件 2 -->
+        <label class="file-upload block text-center mt-4">
+            <input type="file" id="file2" class="hidden" onchange="updateFileName(this, 'file-label-2')">
+            <div class="custom-upload-btn">
+                <span id="file-label-2">📂 国家商品信息上传【全部信息】 </span>
+            </div>
+        </label>
+
+        <!-- 语言选择 -->
+        <input type="text" id="language" placeholder="请输入目标语言（如：马来语）" class="w-full border p-3 rounded-md mt-6 focus:ring focus:ring-blue-300 text-center">
+
+        <!-- 提交按钮 -->
+        <button id="submit-btn" class="w-full bg-blue-600 text-white py-3 mt-6 rounded-lg hover:bg-blue-700 transition">
+            🚀 开始转换
+        </button>
+
+        <!-- 进度条 -->
+        <div id="progress-container" class="hidden w-full bg-gray-200 mt-6 rounded-md">
+            <div id="progress-bar" class="bg-blue-500 h-2 rounded-md" style="width: 0%;"></div>
+        </div>
+        <p id="progress-text" class="text-center mt-2 text-gray-600"></p >
+
+        <!-- 状态显示 -->
+        <p id="status" class="text-center mt-4 text-lg font-semibold"></p >
+
+        <!-- 下载链接 -->
+        <a id="download-link" class="hidden text-center block mt-4 bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition">
+            📥 点击下载转换后的 Excel
+        </a >
+    </div>
+
+    <script>
+        function updateFileName(input, labelId) {
+            let fileName = input.files.length > 0 ? input.files[0].name : "📂 请选择 Excel 文件";
+            document.getElementById(labelId).innerText = fileName;
+        }
+    </script>
+    <script>
+        document.getElementById("submit-btn").addEventListener("click", function() {
+            let file1 = document.getElementById("file1").files.length > 0;
+            let file2 = document.getElementById("file2").files.length > 0;
+            let language = document.getElementById("language").value.trim();
+            let status = document.getElementById("status");
+
+            // 检查文件是否都已上传
+            if (!file1 || !file2) {
+                status.innerText = "⚠️ 请上传两个 Excel 文件！";
+                status.style.color = "red";
+                return;
+            }
+
+            // 检查是否输入了目标语言
+            if (!language) {
+                status.innerText = "⚠️ 请输入目标语言！";
+                status.style.color = "red";
+                return;
+            }
+
+            // 如果都已选择，继续执行上传逻辑
+            status.innerText = "⏳ 正在上传文件...";
+            status.style.color = "blue";
+
+            // 模拟文件上传 & 进度条
+            file_data = document.getElementById("file1").files[0]
+            file_data2 =  document.getElementById("file2").files[0]
+            simulateUpload(file_data, file_data2, language);
+        });
+
+        function simulateUpload(file1, file2, language) {
+            let formData = new FormData();
+            formData.append("file1", file1);
+            formData.append("file2", file2);
+            formData.append("language", language);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://127.0.0.1:5000/upload", true);
+
+            xhr.upload.onprogress = function(event) {
+            let percent = Math.round((event.loaded / event.total) * 100);
+            document.getElementById("progress-container").classList.remove("hidden");
+            document.getElementById("progress-bar").style.width = percent + "%";
+            document.getElementById("progress-bar").innerText = percent + "%";
+        };
+
+
+            xhr.onload = function() {
+            if (xhr.status === 200) {
+                document.getElementById("status").innerText = "✅ 转换完成！";
+                document.getElementById("status").style.color = "green";
+                let response = JSON.parse(xhr.responseText);
+                document.getElementById("download-link").href = response.download_url;
+                document.getElementById("download-link").classList.remove("hidden");
+            } else {
+                document.getElementById("status").innerText = "❌ 发生错误！";
+                document.getElementById("status").style.color = "red";
+            }
+        };
+        xhr.send(formData);
+        }
+    </script>
+
+    <style>
+        /* 自定义上传按钮 */
+        .file-upload {
+            display: block;
+        }
+        .custom-upload-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #4A90E2, #007AFF);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            min-width: 200px;
+        }
+        .custom-upload-btn:hover {
+            background: linear-gradient(135deg, #007AFF, #005BBB);
+        }
+    </style>
+
+</body>
+</html>

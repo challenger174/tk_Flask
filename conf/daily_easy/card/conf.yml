@@ -1,0 +1,84 @@
+#  玩具娃包的配置：   日用品店
+tk_util:
+  # 应用密钥
+  app_key: 6fb3154cr64om
+  # 应用密码
+  app_secret: 87c7b62db7729bb59bf0b3c179c788a1395199a1
+#  授权链接，首次进行绑定的时候获取的
+#  authorization_link: https://services.tiktokshop.com/open/authorize?service_id=7447692112831530757
+#  如果为true的话，进行刷新，如果为false的话就暂时不刷新
+  refresh_token: true
+#  访问刷新的频率，单位:s 目前6h刷新一次
+  refresh_frequency: 216000
+
+#是否进行检查img，通过GPT
+check_desc_img: false
+#给自己的店铺一个店铺ID进行数据的处理, 娃包
+shop_id: 9
+
+product:
+    # 1688抓去的重量可能会篇小，所以这里如果能从1688拿到重量信息，则采用该公式进行计算，否则为default_weight,需注意：采集到的重量为g，上传的
+    # 重量为kg,需要进行转换
+    weight_formula: weight*0.001+0.005
+#    是否启用上述的计算格式，如果不启用的话，则使用默认重量：default_weight,配置为true的时候生效
+    use_formula: false
+    #  单位:kg ,key为：重量(g),换算为kg
+    default_weight: 0.050
+    # 单位cm
+    default_high: 10
+    default_width: 15
+    default_length: 15
+#    全球商品的库存量，上传的时候的数量，必须是int类型
+    global_product_quantity: 2000
+
+#售价的计算格式，最后7.25是对美元的汇率
+#价格低于3圆的 价格+货代费用+利润+ 国际物流费 + 1688物流费用/ 抽成
+price_format: ((price+1.5+4+2.83+0.6)/0.875)/7.26
+#价格高于3圆的利润翻倍 1.8*价格+货代费用+ 国际物流费 + 1688物流费用/ 抽成
+price_double_format: ((1.8*price+1.5+2.83+0.6)/0.875)/7.26
+
+#商品属性，针对不同的类目设置不同的brand
+attributes:
+#  品牌
+#  叶子分类类别
+  category_id: 982408
+  attrs:
+    - name: 安全锁
+      id: 100914
+      type_name: 无锁
+      type_id: 1004802
+    - name: 样式
+      id: 100398
+      type_name: 传统的
+      type_id: 1004431
+    - name: 原产国
+      id: 100336
+      type_id: 1001869
+      type_name: 中国大陆
+    - name: 相册类型
+      id: 100922
+      type_id: 1000874
+      type_name: 正常
+
+
+
+# 是否在上传商品的时候直接发布呐：
+public_product: false
+#贴纸店
+
+#country:销售国家
+#price_format 价格计算格式：变量是price：即采购价，价格以人民币价格,计算得到的结果是按照当地的货币展示的价格
+# currency：对应国家的货币
+public_country:
+  - country: PH
+    price_format: ((price+1.5+1.65+4+0.6)/0.8)*8.010
+    currency: PHP
+  - country: MY
+    price_format: ((price+1.5+4.15+4+0.6)/0.8)*0.6104
+    currency: MYR
+  - country: SG
+    price_format: ((price+1.5+0.81+0.6)/0.8)*0.6104
+    currency: SGD
+  - country: TH
+    price_format: ((price+1.5+0.67+0.6)/0.8)*4.6387
+    currency: THB

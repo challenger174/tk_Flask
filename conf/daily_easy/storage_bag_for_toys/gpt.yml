@@ -1,0 +1,49 @@
+title_gpt:
+  name: gpt-3.5-turbo
+#  deepseek_api: sk-5286a3b23d524d09b67f1711a6e535aa
+#  处理文字的gpt链接
+  api: sk-GTGubExJacM9sZtP084e29681b28471e883921702e341fE2
+  base_url: https://api.linkapi.org/v1
+  gpt_module: gpt-3.5-turbo
+  # deepseek解析的系统提示,贴纸
+  title_format: 这是一个中国电商平台的商品标题，我需要英文版作为跨境店的标题，不需要商品的品牌名，长度在130-200字符以内, 实词首字母大写，可以适当润色一下，,可以按照你的经验加上一些电商title当中的关键字优化以提升曝光率和搜索量, 不需要标点符号，标题描述当中不要带跨境【cross-border】相关字眼和对应IP的名称 例如POP MART
+
+#图片识别gpt
+img_judge_gpt:
+    name: image_judge_gpt
+    api: sk-GTGubExJacM9sZtP084e29681b28471e883921702e341fE2
+    base_url: https://api.linkapi.org/v1
+    gpt_module: gpt-4o
+    system_role: 我向你传入了一个图片url，需要你帮我判断一下，这个图是否适用于tiktok电商当中，判断标准，主要检查中文的出现，如果包含少量的中文【少于20个汉字】，返回true_1, 如果不包含中文的商品图，则返回true,如果是一些厂家信息或者大量明显的中文则返回false，如果是商品描述图且非全中文 返回 true_3,如果无法识别，返回true_2, 严格遵守，希望能够在10s钟内返回结果，如果10s钟无法判断，那就直接返回false
+
+#创建详情页的gpt生成对应的html
+description_gpt:
+    name: description_gpt
+    api: sk-GTGubExJacM9sZtP084e29681b28471e883921702e341fE2
+    base_url: https://api.linkapi.org/v1
+    gpt_module: gpt-4o-mini
+    system_role: 我现在有一些照片的url和对应的一些商品的描述信息，因为我是第三方的商家，所以我不想让下游用户知道一些商品的品牌货号等相关的信息，我希望你给我创建一个div的html包含以下内容，div下的第一个子div当中是商品属性的信息，但是不要将厂商以及型号等信息打印，而且要全是英文的，可以适当的加粗等操作,减少无用的间隔，使文子字更紧凑，第二个子div下就是按照顺序排列的子img标签，最后只需要返回最外层的div组成的html就行，不需要其他的任何描述，不需要markdown格式，只需要返回对应的字符串就行
+
+# 分类数据
+attr_show_web:
+    name: attr_show
+    api: sk-GTGubExJacM9sZtP084e29681b28471e883921702e341fE2
+    base_url: https://api.linkapi.org/v1
+    gpt_module: gpt-3.5-turbo
+    system_role: 现在这些数据是我从api获取到的数据，包含category_id 和 数据类型是一个json，希望可以在网页端看到在html当中格式化之后进行展示，不要丢弃任何数据，需要在网页端显示哦
+
+#sku的name翻译原则
+sku_data_trans:
+    name: attr_show
+    api: sk-GTGubExJacM9sZtP084e29681b28471e883921702e341fE2
+    base_url: https://api.linkapi.org/v1
+    gpt_module: gpt-3.5-turbo
+    system_role: 我传递给你一个sku的中文名称，需要你帮我翻译成对应的英文，尽可能简短，长度不要超过35个字符，如果没其他办法，就用最简单的OPTION+A\B\C\D...等方式进行枚举, 英文字母统一都是小写，不需要markdown格式，只需要返回对应的字符串就行，特殊字符翻译如下 裸包翻译为： only Bag；痛包翻译为：doll Bag
+
+#商品分类，按照标题和一些提供的其他的商品属性去填
+attribute_category_gpt:
+  name: attr_show
+  api: sk-GTGubExJacM9sZtP084e29681b28471e883921702e341fE2
+  base_url: https://api.linkapi.org/v1
+  gpt_module: gpt-4o-mini
+  system_role: 现在我给你一商品的标题和摘要信息，在message:当中，然后还有一些规则信息，在role:当中，是一个json字符串，其中json当中的['data']['attributes']是一个数组，需要循环遍历，我需要你判断这个数组下的每个name属性在我的产品当中是什么样的，，它当中有一个values数组，是当前商品的可用的枚举值，可以尽可能贴切的从里面筛选出一个来进行填充，如果不知道，就不要这一项了，最后组成一个{id：最外层的id, values:[id:*name:*]}的json数组,如果values当中是空的，那数组中这一项就不要了，切记，只需要json数组就行，不要额外的输出，不需要markdown格式，只需要返回对应的字符串就行

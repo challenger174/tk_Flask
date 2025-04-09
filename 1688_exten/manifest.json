@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "1688 铺货工具",
+  "version": "1.0",
+  "description": "为TK电商添加商品信息",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.1688.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": ["https://detail.1688.com/*", "http://localhost:5001/*"]
+}

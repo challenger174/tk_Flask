@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Failed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff4e50, #ff6a6a); /* 红色渐变背景 */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px 30px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            max-width: 420px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #fdd;
+        }
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 14px 30px;
+            background: #f44336;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background: #d32f2f;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #d0d0d0;
+        }
+        .footer a {
+            color: #a8e0ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>❌ Registration Failed ❌</h1>
+        <p>Something went wrong during registration. Please try again later.</p>
+<!--        <a href="/register" class="button">Try Again</a>-->
+        <div class="footer">
+            <p> 注册失败了，快去联系开发者看看吧 联系方式: wms_1216@163.com</p>
+        </div>
+    </div>
+</body>
+</html>
